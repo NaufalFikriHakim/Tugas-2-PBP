@@ -4,21 +4,21 @@
       "pk": 1,
       "fields": {
         "watched": true,
-        "title": "Mencuri Raden Saleh",
-        "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "nice Indonesian heist movie"
+        "title": "John Wick: Chapter 3 - Parabellum",
+        "rating": 5,
+        "release_date": "2019-01-21",
+        "review": "Very very good action movie"
       }
     },
     {
       "model": "mywatchlist.mywatchlist",
       "pk": 2,
       "fields": {
-        "watched": true,
-        "title": "Ngeri-Ngeri Sedap",
-        "rating": 5,
-        "release_date": "2022-09-18",
-        "review": "nice Indonesian family movie"
+        "watched": false,
+        "title": "Ada Apa Dengan Cinta",
+        "rating": 1,
+        "release_date": "2019-01-21",
+        "review": "A story about love"
       }
     },
     {
@@ -26,10 +26,10 @@
       "pk": 3,
       "fields": {
         "watched": false,
-        "title": "Better Call Saul",
-        "rating": 5,
-        "release_date": "2022-09-18",
-        "review": "The trials and tribulations of criminal lawyer Jimmy McGill before his fateful run-in with Walter White and Jesse Pinkman."
+        "title": "Breaking Bad",
+        "rating": 2,
+        "release_date": "2019-01-21",
+        "review": "Good movies about narcotics and stuff"
       }
     },
     {
@@ -37,10 +37,10 @@
       "pk": 4,
       "fields": {
         "watched": true,
-        "title": "Decision to Leave",
-        "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "the closer you look, the harder you fall"
+        "title": "One Piece movie: Red",
+        "rating": 3,
+        "release_date": "2019-01-21",
+        "review": "Best one piece movie ever"
       }
     },
     {
@@ -48,10 +48,10 @@
       "pk": 5,
       "fields": {
         "watched": true,
-        "title": "Top Gun: Maverick",
-        "rating": 5,
-        "release_date": "2022-09-18",
-        "review": "feel the need.. the need for speed"
+        "title": "Miracle in Cell no.7",
+        "rating": 4,
+        "release_date": "2019-01-21",
+        "review": "Very good family movie"
       }
     },
     {
@@ -59,10 +59,10 @@
       "pk": 6,
       "fields": {
         "watched": true,
-        "title": "The Batman",
-        "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "unmask the truth"
+        "title": "Avangers",
+        "rating": 5,
+        "release_date": "2019-01-21",
+        "review": "Best Sci-fi movie ever"
       }
     },
     {
@@ -70,10 +70,10 @@
       "pk": 7,
       "fields": {
         "watched": false,
-        "title": "Prisoners",
+        "title": "KKN di Desa Penari",
         "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "every moment matters"
+        "release_date": "2019-01-21",
+        "review": "Scariest movie ever"
       }
     },
     {
@@ -81,10 +81,10 @@
       "pk": 8,
       "fields": {
         "watched": true,
-        "title": "Everything Everywhere All at Once",
-        "rating": 5,
-        "release_date": "2022-09-18",
-        "review": "easily one of the top 5 movies about taxes"
+        "title": "End Game",
+        "rating": 3,
+        "release_date": "2019-01-21",
+        "review": "Best movie ever"
       }
     },
     {
@@ -92,10 +92,10 @@
       "pk": 9,
       "fields": {
         "watched": false,
-        "title": "Happy Old Year",
-        "rating": 3,
-        "release_date": "2022-09-18",
-        "review": "i never knew before that cleaning up your house could be this freakin sad"
+        "title": "The Medium",
+        "rating": 2,
+        "release_date": "2019-01-21",
+        "review": "Scariest movie ever"
       }
     },
     {
@@ -103,21 +103,10 @@
       "pk": 10,
       "fields": {
         "watched": true,
-        "title": "Before, Now & Then",
-        "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "For our mothers and ancestors in the land of Sunda"
-      }
-    },
-    {
-      "model": "mywatchlist.mywatchlist",
-      "pk": 11,
-      "fields": {
-        "watched": true,
-        "title": "Cha Cha Real Smooth",
-        "rating": 4,
-        "release_date": "2022-09-18",
-        "review": "Fresh out of college and stuck at his New Jersey home without a clear path forward."
+        "title": "Jujutsu Kaisen: 0",
+        "rating": 1,
+        "release_date": "2019-01-21",
+        "review": "Best anime ever"
       }
     }
   ]

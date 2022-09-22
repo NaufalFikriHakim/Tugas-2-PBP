@@ -22,3 +22,23 @@ def show_json(req):
 def show_html(req):
     data = MyWatchList.objects.all()
     return HttpResponse(serializers.serialize('html', data), content_type='application/html')
+
+def show_watchlist_main(req):
+    watchlist = MyWatchList.objects.all()
+    watched_count = 0
+    unwathched_count = 0
+    res = False
+    
+    for item in watchlist:
+        if item.watched:
+            watched_count += 1
+        else:
+            unwathched_count += 1
+    if watched_count >= unwathched_count:
+        res = True
+    
+    ctx = {
+        'is_watched_more': res,
+    }
+    
+    return render(req, 'mywatchlist_bonus.html', ctx)

@@ -12,7 +12,8 @@ Data delivery sangat dibutuhkan dalam pengembangan sebuah platform. Data deliver
 5. Lakukan mikrasi model dengan menjalankan `python manage.py makemigrations` dan `python manage.py migrate`
 ## Postman
 ### HTML
-
+![Screenshot 2022-09-22 095612](https://user-images.githubusercontent.com/94209114/191658480-7067b53f-4de8-4f3e-b54b-88df17ac569c.jpg)
 ### JSON
-
+![Screenshot 2022-09-22 095640](https://user-images.githubusercontent.com/94209114/191658501-f925c825-2db1-4775-81de-5a22570d67e8.jpg)
 ### XML
+![Screenshot 2022-09-22 095703](https://user-images.githubusercontent.com/94209114/191658532-9f010979-ea6f-4ddc-8e71-97691408bc77.jpg)

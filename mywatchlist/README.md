@@ -1,5 +1,5 @@
 # Tugas 3
-Link website:
+Link website: https://tugas-2-pbp-naufalfikrihakim.herokuapp.com/mywatchlist/
 ## Perbedaan antara JSON, XML, dan HTML
 JSON adalah turunan JavaScript yang digunakan dalam transfer dan penyimpanan data. Kekinian, bahasa ini sering dimanfaatkan dalam pembuatan aplikasi web. XML adalah Extensible Markup Language yang digunakan untuk menyederhanakan pertukaran dan penyimpanan data. HTML adalah bahasa standar pemrogaman yang digunakan untuk membuat halaman website, yang diakses melalui internet. JSON dan XML sama-sama digunakan untuk pengiriman data, namun perbedaan mereka terdapat pada penulisan syntax. Sedangkan, HTML bertujuan untuk menampilkan data yang disimpan kepada user.
 ## Pentingnya data delivery dalam pengimplemantasian sebuah platform

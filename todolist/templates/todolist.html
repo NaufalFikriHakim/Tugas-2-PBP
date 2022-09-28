@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h5>Nama: </h5>
+<p>{{nama}}</p>
+<h5>NPM: </h5>
+<p>{{npm}}</p>
+
+<div>
+    <h1>Todolist</h1>
+    {% if user.is_authenticated %}
+    <h1>Hello! {{user.get_username}}</h1> 
+    <button><a href="{% url 'todolist:show_create_task' %}">Create Task</a></button>
+  </div>
+
+<table>
+    {% if list_todo %}
+    <tr>
+    <th>Date</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Status</th>
+    </tr>
+    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+    {% for todo in list_todo %}
+        <tr>
+            <th>{{todo.date}}</th>
+            <th>{{todo.title}}</th>
+            <th>{{todo.description}}</th>
+            <th>{% if todo.is_finished %} Selesai {% else %} Belum Selesai {% endif %}</th>
+
+            <th>
+                {% if todo.is_finished %}
+                <input type="checkbox" onclick="location.href=`{% url 'todolist:update' pk=todo.id %}`" checked/>
+                    {% else %}
+                    <input type="checkbox" onclick="location.href=`{% url 'todolist:update' pk=todo.id %}`"/>
+                    {% endif %}
+              </th>
+              <th><a href="{% url 'todolist:delete' pk=todo.id %}">Delete</a></th>
+        </tr>
+    {% endfor %}
+
+    {% else %}
+    <h5>Todolist Kosong </h5>
+    {% endif %}
+</table>
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
+{% endif %}
+{% endblock content %}

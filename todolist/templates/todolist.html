@@ -1,50 +1,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h5>Nama: </h5>
-<p>{{nama}}</p>
-<h5>NPM: </h5>
-<p>{{npm}}</p>
 
-<div>
-    <h1>Todolist</h1>
-    {% if user.is_authenticated %}
-    <h1>Hello! {{user.get_username}}</h1> 
-    <button><a href="{% url 'todolist:show_create_task' %}">Create Task</a></button>
-  </div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<style>
+    .navbar {
+        margin-bottom: 50px;
+    }
+    .todolist {
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
+    a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+    a:hover {
+        color: inherit;
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    .table {
+        overflow-wrap: break-word;
+        margin-top: 30px;
+    }
+    .card-body:hover {
+        background:rgb(234, 234, 234);
+        transition-duration: 0.15s;
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 
-<table>
-    {% if list_todo %}
-    <tr>
-    <th>Date</th>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Status</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for todo in list_todo %}
-        <tr>
-            <th>{{todo.date}}</th>
-            <th>{{todo.title}}</th>
-            <th>{{todo.description}}</th>
-            <th>{% if todo.is_finished %} Selesai {% else %} Belum Selesai {% endif %}</th>
+    }
+</style>
 
-            <th>
-                {% if todo.is_finished %}
-                <input type="checkbox" onclick="location.href=`{% url 'todolist:update' pk=todo.id %}`" checked/>
-                    {% else %}
-                    <input type="checkbox" onclick="location.href=`{% url 'todolist:update' pk=todo.id %}`"/>
-                    {% endif %}
-              </th>
-              <th><a href="{% url 'todolist:delete' pk=todo.id %}">Delete</a></th>
-        </tr>
-    {% endfor %}
+<body>
+    <div class="todolist">
+        <div style="text-align: center;">
+            <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0275d8;">
+                <div class="container-fluid py-2 px-4">
+                    <a class="navbar-brand px-2" href="#" style="color: #ffffff;">Welcome, {{user}}!</a>
+                    <button class="btn btn-danger mx-3" style="background-color: #f3f3f3; color: #0275d8; border: #ffffff;" 
+                        type="submit" onclick="location.href=`{% url 'todolist:logout' %}`">Logout</button>
+                    </div>
+            </nav>
+        
+            <h2>To Do List</h2>
+        
+            <button class="btn btn-primary col-6" style="margin-bottom: 25px;"><a href="{% url 'todolist:show_create_task' %}">Tambah Task</a></button>
 
-    {% else %}
-    <h5>Todolist Kosong </h5>
-    {% endif %}
-</table>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<button><a href="{% url 'todolist:logout' %}">Logout</a></button>
-{% endif %}
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for todo in list_todo %}
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">{{todo.date}}</small>
+                                <h3 class="card-text mb-3">{{todo.title}}</h3>
+                                <p class="card-text">{{todo.description}}</p>
+
+                                {% if todo.is_finished %}
+                                    <h6 class="text-success">Selesai</h6>
+                                {% else %}
+                                    <h6 class="text-danger">Belum Selesai</h6>
+                                {% endif %}
+
+                                <div class="btn-group">
+                                    <a href="{% url 'todolist:update' pk=todo.id %}" class="btn btn-primary btn-outline-light">Ubah Status</a>
+                                    <a href="{% url 'todolist:delete' pk=todo.id %}" class="btn btn-primary btn-outline-light">Hapus Task</a>
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>        
+        </div>
+    </div>
+</body>
+
 {% endblock content %}

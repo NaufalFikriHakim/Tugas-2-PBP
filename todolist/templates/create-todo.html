@@ -1,38 +1,50 @@
-{% extends 'base.html' %} {% block meta %}
+{% extends 'base.html' %}
 
-{% endblock meta %} {% block content %}
+{% block meta %}
+<title>Add Task</title>
+{% endblock meta %}
 
-<form method="POST" action="">
-  {% csrf_token %}
-  <table>
-    <tr>
-      <td>Judul:</td>
-      <td>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          class="form-control"
-        />
-      </td>
-    </tr>
+{% block content %}
 
-    <tr>
-      <td>Deskripsi:</td>
-      <td>
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          class="form-control"
-        />
-      </td>
-    </tr>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<style>
+    .add_task {
+        margin: 125px auto 0;
+        max-width: 400px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    h1 {
+        margin-bottom: 35px;
+    }
+</style>
 
-    <tr>
-      <td></td>
-      <td><input class="btn submit_btn" type="submit" value="Submit" /></td>
-    </tr>
-  </table>
-</form>
+<body>
+    <div class = "add_task" style="text-align: center;">
+
+        <h1>Tambah Task</h1>
+    
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <h5>Title</h5>
+                <input type="text" name="title" placeholder="Title" class="form-control">
+            </div>
+    
+            <div class="form-group">
+                <h5>Description</h5>
+                <input type="text" name="description" placeholder="Description" class="form-control desc">
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary col-12" type="submit" value="Tambah">
+            </div>
+        </form>
+    
+    </div>
+</body>
+
+
 {% endblock content %}

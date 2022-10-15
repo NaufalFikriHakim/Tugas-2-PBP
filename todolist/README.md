@@ -16,3 +16,36 @@ Disaat form diisi oleh user dan tombol untuk submit di klik, data akan dicocokan
 6. Melakukan deployment dan memasukkan 2 akun pengguna
 Username = naufal, password = Haha7214
 Username = fikri, password = Haha7214
+# Tugas 5
+## Apa perbedaan dari Inline, Internal, dan External CSS? Apa saja kelebihan dan kekurangan dari masing-masing style?
+| | Inline | Internal | External |
+|-|--|--|--|
+|Perbedaan|Style hanya diaplikasikan pada 1 elemen saja|Styling oleh CSS berada pada file html yang sama| Styling oleh CSS berada pada file tersendiri
+|Kelebihan|Mempermudah modifikasi elemen yang spesifik|Mempermudah styling pada html yang mencakup 1 halaman| Styling dapat dilakukan secara global dengan mudah
+|Kekurangan|Tidak efisien karena bisa saja menulis kode yang sama berulang kali| Tidak efisien ketika ingin menggunakan style yang sama di beberapa file| Tampilan html akan rusak apabila styling yang kita lakukan gagal
+
+
+## Jelaskan tag HTML5 yang kamu ketahui.
+1. `<a>` Tag untuk mendefinisakn hyperlink
+2. `<b>` Tag untuk menampilkan text secara bold
+3. `<body>` Tag untuk mendefinisikan body dari html
+4. `<br>` Tag untuk membuat satu baris kosong
+5. `<button>` Tag untuk membuat tombol
+6. `<div>` Tag untuk memberi batas bagian
+7. `<form>` Tag untuk meminta input
+8. `<head>` Tag untuk mendefinisikan bagian head dari html
+9. `<html>` Tag untuk mendefinisikan root
+10. `<style>` Tag untuk mengatur tampilan
+
+## Jelaskan tipe-tipe CSS selector yang kamu ketahui.
+1. Selektor Universal (*), akan memilih semua elemen 
+2. Selektor Tag, akan memilih elemen yang sesuai dengan tag
+3. Selektor ID, akan memilih elemen berdasarkan ID
+4. Selektor Class (didahului .), akan memilih elemen berdasarkan class yang dipilih
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+1. Masukkan <link> bootstrap kepada base.html
+2. Menerapkan style dan bootstrap kepada halaman login, register, create-task, dan todolist
+3. Menerapkan efek ketika cards di halama todolist di hover
+4. Membuat keempat halaman responsif dengan memasukkan media query pada base.html
+5. Melakukan push dan deploy kepada heroku

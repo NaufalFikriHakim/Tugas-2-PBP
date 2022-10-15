@@ -32,7 +32,72 @@
 
     }
 </style>
-
+<script>
+    async function getTodolist() {
+      return fetch("{% url 'todolist:show_json' %}").then((result) => result.json())
+    }
+  
+    async function refreshTodolist(){
+    document.getElementById("tasks").innerHTML = ""
+      const todolist = await getTodolist()
+      let htmlstring = ``
+      todolist.forEach((task) => {
+        htmlstring +=
+        `
+        <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <small class="text-muted">${task.fields.date}</small>
+                                <h3 class="card-text mb-3">${task.fields.title}</h3>
+                                <p class="card-text">${task.fields.description}</p>
+        `
+        if (task.fields.is_finished) {
+          htmlstring +=`
+            <h6 class="text-success">Selesai</h6>
+            <a onclick=changeStatus(${task.pk}) class="btn btn-sm btn-outline-secondary">Undo Task</a>
+          `
+        }
+        else {
+          htmlstring += `
+          <h6 class="text-danger">Belum Selesai</h6>
+          `
+        }
+        htmlstring += `
+        <div class="btn-group">
+                                    <a onclick=changeStatus(${task.pk}) class="btn btn-primary btn-outline-light">Ubah Status</a>
+                                    <a onclick=deleteTodolist(${task.pk}) class="btn btn-primary btn-outline-light">Hapus Task</a>
+                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        `
+      })
+      document.getElementById("tasks").innerHTML = htmlstring
+    }
+  
+    function addTodolist() {
+      fetch("{% url 'todolist:add_task' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshTodolist)
+      return false
+    }
+  
+    function changeStatus(id) {
+      fetch("{{ request.path }}change-status/"+id).then(refreshTodolist)
+      return false
+    }
+  
+    function deleteTodolist(id) {
+      fetch("{{ request.path }}hapus/"+id).then(refreshTodolist)
+      return false
+    }
+  
+    document.getElementById("button").onclick = addTodolist
+  
+    refreshTodolist()
+  </script>
 <body>
     <div class="todolist">
         <div style="text-align: center;">
@@ -46,9 +111,33 @@
         
             <h2>To Do List</h2>
         
-            <button class="btn btn-primary col-6" style="margin-bottom: 25px;"><a href="{% url 'todolist:show_create_task' %}">Tambah Task</a></button>
+            <div class="album py-5 bg-light">
+                <div class="container">
+          
+                  <form class="row g-3 align-items-center mb-4" id="form" onsubmit="return false;">
+                    {% csrf_token %}
+          
+                    <div class="col-auto">
+                      <label class="fs-4">Create a Task: </label>
+                  </div>
+          
+                    <div class="col-auto">
+                        <input type="text" name="title" placeholder="Title" class="form-control">
+                    </div>
+          
+                    <div class="col-sm-7">
+                      <input type="description" name="description" placeholder="Description" class="form-control">
+                    </div>
+                  
+                    <input id="button" class="col btn btn-primary" type="submit" value="Create"></td>
+                    
+                  </form>
+          
+                  <div id="tasks" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+              
+                </div>
 
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <!-- <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for todo in list_todo %}
                     <div class="col">
                         <div class="card shadow-sm h-100">
@@ -72,7 +161,7 @@
                         </div>
                     </div>
                 {% endfor %}
-            </div>        
+            </div>         -->
         </div>
     </div>
 </body>

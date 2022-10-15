@@ -4,9 +4,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from todolist.models import Task
+from django.core import serializers
 import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.urls import reverse
+from todolist.forms import TaskForm
 # Create your views here.
 
 
@@ -41,9 +43,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    response = HttpResponseRedirect(reverse('todolist:login'))
-    response.delete_cookie('last_login')
-    return response
+    return redirect('todolist:login')
 
 @login_required(login_url='/todolist/login/')
 def show_todolist(request):
@@ -59,25 +59,47 @@ def show_todolist(request):
 @login_required(login_url='/todolist/login/')
 def show_create_task(request):
     if request.method == 'POST':
-        title = request.POST.get('title')
-        description = request.POST.get('description')
-        list_todo = Task.objects.create(title=title, description=description,date=datetime.date.today(),is_finished=False, user=request.user)
-        response = HttpResponseRedirect(reverse("todolist:show_todolist")) 
-        return response
-    
-    return render(request, "create-todo.html")
+        form = TaskForm(request.POST)
+
+        form.instance.user = request.user
+        form.instance.date = datetime.datetime.now()
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("todolist:show_todolist"))
+
+    else:
+        form = TaskForm()
+
+        return render(request, 'create-todo.html', {'form':form})
 
 def update(request,pk):
 
-    todo = get_object_or_404(Task, pk = pk)
-    todo.is_finished = not todo.is_finished
-    todo.save()
-
-    return redirect('todolist:show_todolist')
-
+    task = Task.objects.filter(id=pk).first()
+    task.is_finished = task.is_finished ^ True
+    task.save()
+    return HttpResponse(b"CHANGED", status=201) # used for asynchronus task status change
 def delete(request,pk):
 
-    todo = get_object_or_404(Task, pk = pk)
-    todo.delete()
+    Task.objects.filter(id=pk).first().delete()
+    return HttpResponse(b"DELETED", status=201) # used for asynchronus delete
 
-    return redirect('todolist:show_todolist')
+@login_required(login_url='/todolist/login/')
+def show_json(request):
+    user = request.user
+    data = Task.objects.filter(user=user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+@login_required(login_url='/todolist/login/')
+def add_task(request):                      # asynchronus create task
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+
+        form.instance.user = request.user
+        form.instance.date = datetime.datetime.now()
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()

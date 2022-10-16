@@ -1,0 +1,220 @@
+{% extends 'base.html' %} {% block meta %}
+<title>Todolist</title>
+<style>
+    .navbar {
+        margin-bottom: 50px;
+    }
+    .todolist {
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
+    a {
+        text-decoration: none;
+        color: #ffffff;
+    }
+    a:hover {
+        color: inherit;
+    }
+    h2 {
+        margin-bottom: 20px;
+    }
+    .table {
+        overflow-wrap: break-word;
+        margin-top: 30px;
+    }
+    .card-body:hover {
+        background:rgb(234, 234, 234);
+        transition-duration: 0.15s;
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+
+    }
+</style>
+{% endblock meta %} {% block content %}
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const card = (data) => `
+        
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <small class="text-muted">${data.fields.date}</small>
+                            <h3 class="card-text mb-3">${data.fields.title}</h3>
+                            <p class="card-text">${data.fields.description}</p>
+                            ${ data.fields.is_finished ? `<h6 class="text-success">Selesai</h6>` : `<h6 class="text-danger">Belum Selesai</h6>`}
+                            <div class="btn-group">
+                                
+                                <div onclick="location.href='/todolist/update_task/${data.pk}/'" class="cursor-pointer">
+                                    <button><a class="btn btn-primary btn-outline-light">Ubah Status</a></button>
+                                </div>
+                                <div onclick="location.href='/todolist/delete_task/${data.pk}/'" class="cursor-pointer">
+                                    <button><a class="btn btn-primary btn-outline-light">Hapus Task</a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        `
+      const addCard = (data) => {
+        return $('#todo').append(card(data))
+      }
+
+      const removeCard = (task) => {
+        $(`#${task.pk}`).click(function () {
+          $.ajax({
+            url: `/todolist/delete_task/${task.pk}`,
+            type: 'DELETE',
+            success: function (response) {
+              $(`#${task.pk}-card`).remove()
+            },
+          })
+        })
+      }
+
+      $.get('/todolist/json', function (todo) {
+        todo.map((task) => {
+          addCard(task)
+          removeCard(task)
+        })
+      })
+
+      $('#add-todo').click(function () {
+        if ($('#title').val() && $('#description').val()) {
+          $.post(
+            '/todolist/add/',
+            {
+              title: $('#title').val(),
+              description: $('#description').val(),
+            },
+            function (res, status) {
+              if (status == 'success') {
+                addCard(res)
+                $('#title').val('')
+                $('#description').val('')
+                removeCard(res)
+              }
+            },
+          )
+        }
+      })
+    })
+  </script>
+</head>
+
+{% if user.is_authenticated %}
+<!-- NAVBAR -->
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0275d8;">
+        <div class="container-fluid py-2 px-4">
+            <a class="navbar-brand px-2" href="#" style="color: #ffffff;">Welcome, {{user}}!</a>
+            <button class="btn btn-danger mx-3" style="background-color: #f3f3f3; color: #0275d8; border: #ffffff;" 
+                type="submit" onclick="location.href=`{% url 'todolist:logout' %}`">Logout</button>
+            </div>
+    </nav>
+    
+    <div class="mx-8" style="text-align: center;">      
+    
+    <h2>To Do List</h2>
+    
+      <button data-bs-toggle="modal" data-bs-target="#exampleModal"class="btn btn-primary col-6" style="margin-bottom: 25px;"><a>Tambah Task</a></button>
+
+    
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered relative w-auto pointer-events-none">
+            <div class="modal-content" style="background-color: #0275d8;">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    Tambah Task
+                </h1>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+                </div>
+                <div class="modal-body">
+                <div class="flex justify-center">
+                    <div class="lg:w-64 mt-3">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <label class="block">
+                        
+                            Title
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            class=""
+                            placeholder="Title"
+                            required
+                        />
+                        </label>
+        
+                        <label class="block mt-2">
+                        <span
+                            class=""
+                        >
+                            Description
+                        </span>
+                        <input
+                            type="text"
+                            name="description"
+                            id="description"
+                            class=""
+                            placeholder="Description"
+                            required
+                        />
+                        </label>
+                    </form>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button
+                    type="button"
+                    class="rounded-xl btn btn-success btn-outline-light"
+                    data-bs-dismiss="modal"
+                >
+                    Cancel
+                </button>
+        
+                <button
+                    id="add-todo"
+                    type="button"
+                    class="inline-flex space-x-2 items-center justify-end px-6 py-3 rounded-xl btn btn-success btn-outline-light"
+                    data-bs-dismiss="modal"
+                >
+                    Tambah Task
+                </button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <div id="todo" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+        
+        {% else %}
+        <div></div>
+        </div>
+    
+        <div class="todolist">
+        <div style="text-align: center;">
+    
+            
+        
+        <div class="mb-16 grid lg:grid-cols-2 md:grid-cols-1 gap-5 mt-8 sm:mt-5" id="todo"></div>
+        </div>
+    </div>
+</body>
+
+{% endif %} {% endblock content %}
+

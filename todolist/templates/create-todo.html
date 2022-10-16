@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Add Task</title>
+{% endblock meta %}
+
+{% block content %}
+
+<style>
+    .create_task {
+        margin: 125px auto 0;
+        max-width: 400px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    h1 {
+        margin-bottom: 35px;
+    }
+</style>
+
+<body>
+    <div class = "create_task" style="text-align: center;">
+
+        <h1>Tambah Task</h1>
+    
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <h5>Title</h5>
+                <input type="text" name="title" placeholder="Title" class="form-control">
+            </div>
+    
+            <div class="form-group">
+                <h5>Description</h5>
+                <input type="text" name="description" placeholder="Description" class="form-control desc">
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-success col-12" type="submit" value="Tambah">
+            </div>
+        </form>
+    
+    </div>
+</body>
+
+
+{% endblock content %}

@@ -46,10 +46,10 @@
                             ${ data.fields.is_finished ? `<h6 class="text-success">Selesai</h6>` : `<h6 class="text-danger">Belum Selesai</h6>`}
                             <div class="btn-group">
                                 
-                                <div onclick="location.href='/todolist/update_task/${data.pk}/'" class="cursor-pointer">
+                                <div onclick="location.href='/todolist/update/${data.pk}/'" class="cursor-pointer">
                                     <button><a class="btn btn-primary btn-outline-light">Ubah Status</a></button>
                                 </div>
-                                <div onclick="location.href='/todolist/delete_task/${data.pk}/'" class="cursor-pointer">
+                                <div onclick="location.href='/todolist/delete/${data.pk}/'" class="cursor-pointer">
                                     <button><a class="btn btn-primary btn-outline-light">Hapus Task</a></button>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
       const removeCard = (task) => {
         $(`#${task.pk}`).click(function () {
           $.ajax({
-            url: `/todolist/delete_task/${task.pk}`,
+            url: `/todolist/delete/${task.pk}`,
             type: 'DELETE',
             success: function (response) {
               $(`#${task.pk}-card`).remove()
